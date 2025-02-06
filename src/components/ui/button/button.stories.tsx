@@ -21,6 +21,6 @@ export const Default: Story = {
     size: "sm",
     onClick: action("clicked"),
     children: "Button",
-    className: "bg-red-500",
+    className: "bg-gray-800 text-white rounded-3xl hover:bg-gray-700 p-4 w-40",
   },
 };

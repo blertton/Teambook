@@ -21,6 +21,7 @@ import {
   ChevronUp,
   ChevronDown,
 } from "lucide-react";
+import Link from "next/link";
 
 const items = [
   { title: "Home", url: "#", icon: Home },
@@ -67,13 +68,19 @@ export function AppSidebar({ user }: AppSidebarProps) {
       </SidebarContent>
       <SidebarFooter className="relative">
         {isDropdownOpen && (
-          <div className="mb-2 bg-gray-800 rounded-md shadow-lg absolute bottom-full w-[93%]">
-            <a href="#" className="block px-4 py-2 text-white">
+          <div className="mb-2 bg-black rounded-xl shadow-lg absolute bottom-full w-[93%] hover:cursor-pointer ">
+            <Link
+              href="/login"
+              className="block px-4 py-2 text-white hover:bg-gray-900 rounded-full"
+            >
               Sign up
-            </a>
-            <a href="#" className="block px-4 py-2 text-white">
-              Login
-            </a>
+            </Link>
+            <Link
+              href="/login"
+              className="block px-4 py-2 text-white hover:bg-gray-900 rounded-full"
+            >
+              Log out
+            </Link>
           </div>
         )}
         <SidebarMenu>

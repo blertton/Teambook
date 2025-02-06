@@ -1,17 +1,9 @@
-import {
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar/sidebar";
-import { AppSidebar } from "@/components/AppSidebar";
+import { LoginForm } from "@/components/LoginForm";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Home() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
+    <div className="min-h-screen flex items-center justify-center">
+      <LoginForm />
+    </div>
   );
 }
