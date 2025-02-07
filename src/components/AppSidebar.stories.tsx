@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { AppSidebar } from "./AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar/sidebar";
-import { fn } from "@storybook/test";
 
 const meta = {
   title: "Components/AppSidebar",
@@ -18,11 +17,11 @@ const meta = {
     layout: "fullscreen",
   },
   args: {
-    user: { name: "Jane Doe" }, // Default username
+    user: { name: "Jane Doe" },
   },
   argTypes: {
     user: {
-      control: "object", // Enables object control in Storybook
+      control: "object",
     },
   },
 } satisfies Meta<typeof AppSidebar>;

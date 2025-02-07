@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 import {
   Form,
@@ -22,7 +22,9 @@ import {
   CardTitle,
 } from "@/components/ui/card/card";
 import { Input } from "@/components/ui/input/input";
-import { PasswordInput } from "@/components/ui/password-input/password-input";
+import { Alert } from "@/components/ui/alerts/alert";
+
+import { CheckCircle, XCircle, Info, AlertCircle } from "lucide-react";
 
 // Schema validation with Zod
 const formSchema = z.object({
@@ -43,34 +45,94 @@ export default function LoginForm() {
     },
   });
 
+  const [alert, setAlert] = useState<{
+    type: "success" | "error" | "info" | "warning";
+    title: string;
+    icon: React.ReactNode;
+    description: string;
+  } | null>(null);
+
+  const alertIcons = {
+    success: <CheckCircle className="h-5 w-5 text-green-700" />,
+    error: <XCircle className="h-5 w-5 text-red-700" />,
+    warning: <AlertCircle className="h-5 w-5 text-yellow-800" />,
+    info: <Info className="h-5 w-5 text-blue-700" />,
+  };
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Test credentials
       const testEmail = "test@gmail.com";
       const testPassword = "test123";
 
-      // Check if the entered credentials match the test values
       if (values.email === testEmail && values.password === testPassword) {
-        // Redirect to the dashboard on successful login
-        router.push("/dashboard");
-        toast.success("Login successful!");
+        setAlert({
+          type: "success",
+          title: "Success",
+          icon: alertIcons.success,
+          description: "You have successfully logged in!",
+        });
+
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 2000);
       } else {
-        toast.error("Invalid credentials, please try again.");
+        setAlert({
+          type: "error",
+          icon: alertIcons.error,
+          title: "Login Failed",
+          description: "Invalid credentials, please try again.",
+        });
       }
     } catch (error) {
       console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      setAlert({
+        type: "error",
+        title: "Error",
+        icon: alertIcons.error,
+        description: "Something went wrong. Please try again later.",
+      });
     }
   }
 
+  const handleShowCredentials = () => {
+    form.setValue("email", "test@gmail.com");
+    form.setValue("password", "test123");
+
+    setAlert({
+      type: "info",
+      title: "Test Credentials",
+      icon: alertIcons.info,
+      description: "Email: test@gmail.com | Password: test123",
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-[50vh] h-full w-full items-center justify-center px-4">
+      {alert && (
+        <div className="absolute top-20 w-[50%] flex items-center justify-center">
+          <Alert
+            type={alert.type}
+            title={alert.title}
+            description={alert.description}
+            icon={alert.icon}
+            onClose={() => setAlert(null)}
+          />
+        </div>
+      )}
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Enter your email and password to login to your account.
+            Enter your email and password to login to your account. <br />
+            Email: test@gmail.com | Password: test123
           </CardDescription>
+          <Button
+            variant="outline"
+            className="w-full rounded-2xl"
+            onClick={handleShowCredentials}
+          >
+            Click For Email and Password
+          </Button>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -86,6 +148,7 @@ export default function LoginForm() {
                         <Input
                           id="email"
                           placeholder="johndoe@mail.com"
+                          className="text-gray-500"
                           type="email"
                           autoComplete="email"
                           {...field}
@@ -110,9 +173,10 @@ export default function LoginForm() {
                         </Link>
                       </div>
                       <FormControl>
-                        <PasswordInput
+                        <Input
                           id="password"
                           placeholder="******"
+                          className="text-gray-500"
                           autoComplete="current-password"
                           {...field}
                         />
@@ -122,7 +186,6 @@ export default function LoginForm() {
                   )}
                 />
                 <Button
-                  type="submit"
                   onClick={form.handleSubmit(onSubmit)}
                   className="w-full bg-gray-900 text-white rounded-2xl hover:bg-gray-800"
                 >

@@ -1,77 +1,87 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Alert } from "./alert";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Alert } from './alert';
+import { XCircle } from 'lucide-react';
 
 const meta: Meta<typeof Alert> = {
-  title: "Components/ui/Alert",
+  title: 'Components/ui/Alert',
   component: Alert,
-  tags: ["alert", "autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     type: {
-      control: "select",
-      options: ["success", "error", "warning", "info"],
+      control: { type: 'select' },
+      options: ['success', 'error', 'warning', 'info'],
     },
     variant: {
-      control: "select",
-      options: ["solid", "subtle"],
+      control: { type: 'radio' },
+      options: ['solid', 'subtle'],
     },
-    icon: {
-      control: "select",
-      options: [true, false, "custom"],
-    },
-    onClose: {
-      action: "closed",
-    },
-    title: {
-      control: "text",
-    },
-    description: {
-      control: "text",
-    },
+    title: { control: 'text' },
+    description: { control: 'text' },
+    icon: { control: 'boolean' },
   },
-};
+} satisfies Meta<typeof Alert>;
 
 export default meta;
-type Story = StoryObj<typeof Alert>;
 
-export const Success: Story = {
+const Template: StoryObj<typeof Alert> = {
+  render: (args) => <Alert {...args} />,
+};
+
+export const SuccessSolid = {
+  ...Template,
   args: {
-    type: "success",
-    title: "Success",
-    description: "Operation completed successfully.",
-    icon: true,
+    type: 'success',
+    variant: 'solid',
+    title: 'Operation Successful',
+    description: 'Your changes have been saved successfully',
   },
 };
 
-export const Warning: Story = {
+export const ErrorSubtle = {
+  ...Template,
   args: {
-    type: "warning",
-    title: "Update Available",
-    description: "A new version is ready to install.",
-    icon: true,
+    type: 'error',
+    variant: 'subtle',
+    title: 'Critical Error',
+    description: 'Failed to save changes - please try again',
   },
 };
 
-export const DescriptionOnly: Story = {
+export const TitleOnly = {
   args: {
-    type: "info",
-    description: "This alert has no title, only a description.",
-    icon: true,
+    type: 'warning',
+    title: 'Storage Warning',
+    description: undefined,
   },
 };
 
-export const WithoutIcon: Story = {
+export const DescriptionOnly = {
   args: {
-    type: "warning",
-    description: "This alert has no icon.",
-    icon: false,
+    type: 'info',
+    title: undefined,
+    description: 'System maintenance scheduled for tonight at 10 PM',
   },
 };
 
-export const Closable: Story = {
+export const CustomIcon = {
   args: {
-    type: "error",
-    title: "Error",
-    description: "Something went wrong.",
-    onClose: () => console.log("Alert closed"),
+    type: 'error',
+    icon: <XCircle className="h-5 w-5" />,
+    title: 'Custom Icon Alert',
+  },
+};
+
+export const ClosableAlert = {
+  args: {
+    type: 'info',
+    title: 'Dismissable Alert',
+    onClose: () => console.log('Closed alert'),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates close button functionality with callback',
+      },
+    },
   },
 };
