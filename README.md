@@ -9,11 +9,7 @@ A collection of reusable, accessible, and responsive React components built with
 - [Overview](#overview)
 - [Features](#features)
 - [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Usage Examples](#usage-examples)
-- [Technologies](#technologies)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ---
 
@@ -72,3 +68,4 @@ bash
 npm run storybook
 or
 yarn storybook
+
