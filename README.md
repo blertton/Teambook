@@ -51,21 +51,13 @@ This project is a showcase of several UI components including Alerts, MultiSelec
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
-   ```
-2. **Change into the project directory:**
-   ```bash
-   cd your-repo
-   ```
-3. **Install dependencies:**
+1. **Install dependencies:**
    ```bash
    npm install
    # or
    yarn install
    ```
-4. **Start the development server:**
+2. **Start the development server:**
    ```bash
    npm run dev
    # or
