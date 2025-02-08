@@ -38,7 +38,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       <AppSidebar />
       <SidebarTrigger />
       <main className="p-4 md:p-6 lg:p-8 flex flex-col gap-4 ml-20">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex-row items-center justify-between gap-4 xl:flex ">
           <AlertDemo />
           <PieChart />
         </div>{" "}
