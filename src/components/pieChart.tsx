@@ -24,6 +24,10 @@ interface DataPoint {
 export function Component() {
   const [chartData, setChartData] = React.useState<DataPoint[]>([]);
 
+  interface Product {
+    category: string;
+  }
+
   React.useEffect(() => {
     async function fetchData() {
       try {
@@ -32,19 +36,18 @@ export function Component() {
 
         const categoryCounts: Record<string, number> = {};
 
-        data.products.forEach((product: any) => {
+        (data.products as Product[]).forEach((product) => {
           const category = product.category;
           categoryCounts[category] = (categoryCounts[category] || 0) + 1;
         });
 
-        const processedData = Object.keys(categoryCounts).map(
-          (category, index) => ({
-            name: category,
-            value: categoryCounts[category],
-            fill: `hsl(${(index * 60) % 360}, 70%, 50%)`,
-          })
-        );
-
+        const processedData: DataPoint[] = (
+          Object.entries(categoryCounts) as [string, number][]
+        ).map(([category, count], index) => ({
+          name: category,
+          value: count,
+          fill: `hsl(${(index * 60) % 360}, 70%, 50%)`,
+        }));
         setChartData(processedData);
       } catch (error) {
         console.error("Error fetching data:", error);
