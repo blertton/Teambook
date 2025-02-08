@@ -51,7 +51,7 @@ const AlertDemo = () => {
   };
 
   return (
-    <Card className="mx-auto h-fit w-fit ml-20 mt-16">
+    <Card className="flex flex-col ">
       <CardHeader className="flex justify-center items-center">
         <CardTitle className="text-2xl">Alert Demo</CardTitle>
         <CardDescription>

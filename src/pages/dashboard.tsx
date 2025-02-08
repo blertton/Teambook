@@ -3,6 +3,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar/sidebar";
 import AlertDemo from "@/components/alertDemo";
 import { MultiSelect } from "@/components/multiselect";
+import { Component as PieChart } from "@/components/pieChart";
 
 async function fetchCountries() {
   try {
@@ -35,14 +36,17 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="p-4 md:p-6 lg:p-8 flex flex-col gap-4">
-        <SidebarTrigger />
-        <AlertDemo />
-        <h1 className="text-2xl font-semibold text-gray-700 ml-20">
+      <SidebarTrigger />
+      <main className="p-4 md:p-6 lg:p-8 flex flex-col gap-4 ml-20">
+        <div className="flex items-center justify-between gap-4">
+          <AlertDemo />
+          <PieChart />
+        </div>{" "}
+        <h1 className="text-2xl font-semibold text-gray-700">
           Choose a Country
         </h1>
-        <div className="flex items-center justify-between gap-4 ml-20">
-          <div className="flex-1 max-w-2xl">
+        <div className="flex items-center justify-between gap-4 ">
+          <div className="flex-1 max-w-lg">
             <MultiSelect
               options={fetchCountries}
               placeholder="Select countries..."
@@ -52,7 +56,6 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
             />
           </div>
         </div>
-
         <div className="max-w-4xl mx-auto w-full">{children}</div>
       </main>
     </SidebarProvider>
